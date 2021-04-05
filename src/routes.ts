@@ -1,8 +1,7 @@
-import * as  Hapi from "@hapi/hapi";
+import userRoute from "./Api/Users/route";
 
-const a={
-    method: "GET",
-    path: "/",
-    handler: (request:Hapi.Request, h:Hapi.ResponseToolkit):any =>"Hello World!" 
-  }
-export default a;
+const Routes=[
+    ...userRoute,
+]
+
+export default Routes;

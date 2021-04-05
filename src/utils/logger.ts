@@ -1,14 +1,8 @@
+import * as Hapi from "@hapi/hapi";
+
 const colors = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
-  // Dim: "\x1b[2m",
-  // Italic: "\x1b[3m",
-  // Underline: "\x1b[4m",
-  // BlinkSlow: "\x1b[5m",
-  // RapidBlink: "\x1b[6m",
-  // Reverse: "\x1b[7m",
-  // Hidden: "\x1b[8m",
-  // Strike: "\x1b[9m",
 
   FgBlack: "\x1b[30m",
   FgRed: "\x1b[31m",
@@ -34,6 +28,7 @@ const infoName = `${colors.FgBlue}[INFO]${colors.Reset}`;
 const errorName = `${colors.FgRed}[Error]${colors.Reset}`;
 const warnName = `${colors.FgYellow}[Warning]${colors.Reset}`;
 const successName = `${colors.FgGreen}[Success]${colors.Reset}`;
+const responseName=`${colors.FgCyan}[Response]${colors.Reset}`;
 const date=new Date().toISOString();
 
 const info = (message: string ) =>addLogger(message, infoName);
@@ -42,7 +37,15 @@ const error = (message: string ) => addLogger(message, errorName);
 
 const warn = (message: string ) => addLogger(message, warnName);
 
-const res = (message: string) => addLogger(message, successName);
+const ok = (message: string) => addLogger(message, successName);
+
+const res = (request: Hapi.Request) =>{
+
+const method=`${colors.FgCyan}${request.method.toUpperCase()}${colors.Reset}`;
+const statusCode=`${colors.FgCyan}${request.raw.res.statusCode}${colors.Reset}`;
+
+return addLogger(`${method} ${request.path} ${statusCode}`,responseName);
+};
 
 const addLogger=(message:string, msgType:string)=>{
   return console.log(`${loggerName} ${date} ${msgType}   ${message}`)
@@ -53,5 +56,6 @@ const logger = {
   error,
   warn,
   res,
+  ok
 }
 export default logger;

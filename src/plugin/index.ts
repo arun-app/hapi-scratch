@@ -4,6 +4,7 @@ import * as Inert from "@hapi/inert";
 import * as Vision from "@hapi/vision";
 
 import { swaggerOptions,statusMonitor } from "../config";
+import {Logger} from "../utils";
 
 const plugins: Array<Hapi.ServerRegisterPluginObject<any>> = [
   {
@@ -21,5 +22,7 @@ const plugins: Array<Hapi.ServerRegisterPluginObject<any>> = [
     options: statusMonitor,
   },
 ];
-  console.log("Plugin Registration Successful");  
+
+Logger.info("Plugin Registration Successful");  
+
 export default plugins;

@@ -1,7 +1,7 @@
 import * as Hapi from "@hapi/hapi";
-import plugins from "./plugin";
+import Plugins from "./plugin";
 import {Logger} from "./utils";
-import routes from "./routes";
+import Routes from "./routes";
 
 const init = async () => {
   const server = Hapi.server({
@@ -9,16 +9,15 @@ const init = async () => {
     host: "localhost",
   });
   
-  await server.register(plugins);
-
-  server.route(routes)
+  await server.register(Plugins);
+  server.route(Routes)
   
   await server.start();
 
   Logger.info(`Server running on ${server.info.uri}`)
 
   server.events.on('response', function (request) {
-    Logger.res(request.method.toUpperCase() + ' ' + request.path+ ' ' +request.raw.res.statusCode)
+    Logger.res(request)
 });
 };
 
